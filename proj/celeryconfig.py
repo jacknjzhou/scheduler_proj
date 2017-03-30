@@ -23,7 +23,7 @@ CELERY_ENABLE_UTC = False
 CELERY_LOG_FILE='/tmp/celery_proj.log'
 
 CELERYBEAT_SCHEDULE = {
-    'add':{'task':'proj.tasks.add','schedule':crontab('*/60'),
+    'add':{'task':'proj.tasks.add','schedule':crontab('*/20'),
             'args':(-1,-1)}
 }
 

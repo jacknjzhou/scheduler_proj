@@ -9,6 +9,7 @@ from celery.utils.log import get_task_logger
 logger = get_task_logger(__name__)
 
 class MyTask(Task):
+
     def on_success(self,retval,task_id,args,kwargs):
         print "task done:{0}".format(retval)
 
@@ -16,6 +17,10 @@ class MyTask(Task):
     def on_failure(self,exc,task_id,args,kwargs,einfo):
         print "task fail,reason:{0}".format(exc)
         return super(MyTask,self).on_failure(exc,task_id,args,kwargs,einfo)
+
+    def after_return(self,status,retval,task_id,args,kwargs,einfo):
+        print "after retrun,status:{0}".format(status)
+        return super(MyTask,self).after_return(status,retval,task_id,args,kwargs,einfo)
 
 @app.task(base=MyTask,bind=True)
 def add(self,x, y):
